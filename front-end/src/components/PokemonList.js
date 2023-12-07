@@ -8,9 +8,9 @@ const PokemonList = ({ pokemons }) => {
         {pokemons.map((pokemon) => (
           <div
             id="pokemon-card"
-            className="flex justify-center p-1 max-w-xs m-3 bg-white rounded-sm"
+            className="flex justify-center p-1 max-w-xs m-3 bg-white rounded-md"
             key={pokemon.name}
-            onClick
+            // onClick
           >
             <center>
               <img
@@ -18,7 +18,8 @@ const PokemonList = ({ pokemons }) => {
                 className="w-36 p-3"
                 alt={pokemon.name + " - Front Default Official Pokemon Artwork"}
               ></img>
-              <p className="justify-center">{pokemon.name}</p>
+              <h2 className="justify-center text-lg">{pokemon.name}</h2>
+              <p>score</p>
             </center>
           </div>
         ))}

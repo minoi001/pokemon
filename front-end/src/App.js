@@ -24,6 +24,11 @@ function App() {
           let pokemonDetails = await axios.get(
             `https://pokeapi.co/api/v2/pokemon/${response.data.results[i].name}/`
           );
+          // console.log(pokemonDetails.data.id);
+          // let pokemonCharacteristics = await axios.get(
+          //   `https://pokeapi.co/api/v2/characteristic/${pokemonDetails.data.id}/`
+          // );
+          console.log(pokemonDetails);
           let pokemonSpecifics = pokemonDetails;
           pokemonSpecifics.data = pokemonDetails.data;
           pokemonSpecifics.name = response.data.results[i].name;
@@ -32,7 +37,7 @@ function App() {
             pokemonDetails.data.sprites.other["official-artwork"].front_default;
           pokemonsData.push(pokemonSpecifics);
         }
-
+        console.log(pokemonsData);
         setPokemons(pokemonsData);
         setFilteredPokemons(pokemonsData);
       } catch (error) {
