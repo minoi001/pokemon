@@ -13,12 +13,28 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
+      let pokemonsData = [];
+
       try {
         const response = await axios.get(
-          "https://pokeapi.co/api/v2/pokemon?limit=20"
+          "https://pokeapi.co/api/v2/pokemon?limit=32"
         );
-        setPokemons(response.data.results);
-        setFilteredPokemons(response.data.results);
+
+        for (let i = 0; i < response?.data?.results?.length; i++) {
+          let pokemonDetails = await axios.get(
+            `https://pokeapi.co/api/v2/pokemon/${response.data.results[i].name}/`
+          );
+          let pokemonSpecifics = pokemonDetails;
+          pokemonSpecifics.data = pokemonDetails.data;
+          pokemonSpecifics.name = response.data.results[i].name;
+          pokemonSpecifics.url = response.data.results[i].url;
+          pokemonSpecifics.image =
+            pokemonDetails.data.sprites.other["official-artwork"].front_default;
+          pokemonsData.push(pokemonSpecifics);
+        }
+
+        setPokemons(pokemonsData);
+        setFilteredPokemons(pokemonsData);
       } catch (error) {
         console.error("Error fetching Pokemon data:", error);
       }
@@ -36,10 +52,13 @@ function App() {
   };
 
   return (
-    <div>
+    <div className="App m-3">
       <h1>Pokemon App</h1>
       <SearchBar handleSearch={handleSearch} />
-      <PokemonList pokemons={filteredPokemons} />
+
+      <div className="m-6 bg-slate-100 rounded-sm">
+        <PokemonList pokemons={filteredPokemons} />
+      </div>
     </div>
   );
 }
